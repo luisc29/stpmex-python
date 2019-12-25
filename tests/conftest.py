@@ -28,9 +28,7 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 @pytest.fixture
 def client():
     pkey_passphrase = '12345678'
-    empresa = 'TAMIZI'
     yield Client(
-        empresa=empresa,
         priv_key=PKEY,
         priv_key_passphrase=pkey_passphrase,
         demo=True,
@@ -40,6 +38,7 @@ def client():
 @pytest.fixture
 def orden():
     yield Orden(
+        empresa='TAMIZI',
         institucionContraparte='40072',
         claveRastreo='CR1564969083',
         monto=1.2,
@@ -59,8 +58,3 @@ def orden():
         prioridad=1,
         iva=None,
     )
-
-
-@pytest.fixture
-def soap_orden(client, orden):
-    yield client.soap_orden(orden)

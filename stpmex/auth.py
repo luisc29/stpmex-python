@@ -1,6 +1,10 @@
 from base64 import b64encode
+from typing import List
 
 from OpenSSL import crypto
+
+from .resources import Resource
+
 
 ORDEN_FIELDNAMES = """
     institucionContraparte
@@ -41,10 +45,10 @@ ORDEN_FIELDNAMES = """
 SIGN_DIGEST = 'RSA-SHA256'
 
 
-def join_fields(orden) -> bytes:
+def join_fields(obj: Resource, fieldnames: List[str]) -> bytes:
     joined_fields = []
-    for field in ORDEN_FIELDNAMES:
-        value = getattr(orden, field, None)
+    for field in fieldnames:
+        value = getattr(obj, field, None)
         if isinstance(value, float):
             value = f'{value:.2f}'
         joined_fields.append(str(value or ''))

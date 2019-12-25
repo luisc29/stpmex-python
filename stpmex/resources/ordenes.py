@@ -1,14 +1,17 @@
 import random
 import time
 import unicodedata
-from dataclasses import field
-from typing import Optional, Type
+from dataclasses import asdict, field
+from typing import ClassVar, Optional, Type
 
 import clabe
 from pydantic import PositiveFloat, conint, constr, validator
 from pydantic.dataclasses import dataclass
 
-from .types import Prioridad, TipoCuenta
+from ..auth import ORDEN_FIELDNAMES, compute_signature, join_fields
+from ..exc import StpmexException
+from ..types import Prioridad, TipoCuenta
+from .base import Resource
 
 STP_BANK_CODE = '90646'
 
@@ -24,7 +27,11 @@ def digits(
 
 
 @dataclass
-class Orden:
+class Orden(Resource):
+    _endpoint: ClassVar[str] = '/ordenPago'
+
+    empresa: str
+
     monto: PositiveFloat
     conceptoPago: truncated_str(39)
 
@@ -102,3 +109,14 @@ class Orden:
     def _unicode_to_ascii(cls, v):
         v = unicodedata.normalize('NFKD', v).encode('ascii', 'ignore')
         return v.decode('ascii')
+
+    def registra(self):
+        url = self.base_url + 'ordenPago/registra'
+        orden_dict = asdict(self)
+        orden_dict['empresa'] = self.empresa
+        joined_fields = join_fields(orden_dict, ORDEN_FIELDNAMES)
+        firma = compute_signature(self._pkey, joined_fields)
+        resp = self._client.put(url, json=orden_dict, firma=firma)
+        if 'descripcionError' in resp and resp.json():
+            raise StpmexException(**resp.json())
+        return resp.json()
