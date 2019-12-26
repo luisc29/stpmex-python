@@ -1,5 +1,5 @@
 import pytest
-from zeep.exceptions import TransportError
+from requests import HTTPError
 
 from stpmex.client import Client
 from stpmex.exc import InvalidPassphrase, StpmexException
@@ -32,7 +32,7 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 def test_forbidden_without_vpn(orden):
     client = Client('TAMIZI', PKEY, '12345678')
     client.ordenes.create()
-    with pytest.raises(TransportError) as exc_info:
+    with pytest.raises(HTTPError) as exc_info:
         orden.registra()
     assert exc_info.value.status_code == 403
 

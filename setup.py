@@ -5,7 +5,6 @@ from setuptools import setup
 version = SourceFileLoader('version', 'stpmex/version.py').load_module()
 
 install_requires = [
-    'zeep>=3.1.0,<3.2.0',
     'pyopenssl>=18.0.0,<18.1.0',
     'clabe>=0.2.1,<0.3.0',
     'pydantic>=1.2,<1.3',
@@ -20,6 +19,7 @@ test_requires = [
     'black',
     'isort[pipfile]',
     'flake8',
+    'mypy',
 ]
 
 with open('README.md', 'r') as f:
