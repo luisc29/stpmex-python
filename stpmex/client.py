@@ -5,6 +5,7 @@ from requests import Response, Session
 
 from .exc import InvalidPassphrase, StpmexException
 from .resources import Orden, Resource
+from .version import __version__ as client_version
 
 DEMO_BASE_URL = 'https://demo.stpmex.com:7024/speidemows/rest'
 PROD_BASE_URL = 'https://prod.stpmex.com/speiws/rest'
@@ -14,6 +15,7 @@ class Client:
 
     base_url: str
     demo: bool
+    headers: Dict[str, str]
     session: Session
 
     # resources
@@ -27,6 +29,7 @@ class Client:
         demo: bool = False,
     ):
         self.session = Session()
+        self.headers = {'User-Agent': f'stpmex-python/{client_version}'}
         if demo:
             self.base_url = DEMO_BASE_URL
         else:
@@ -39,7 +42,6 @@ class Client:
             )
         except crypto.Error:
             raise InvalidPassphrase
-        self.empresa = empresa
         Resource.empresa = empresa
         Resource._client = self
 
@@ -52,7 +54,9 @@ class Client:
         self, method: str, endpoint: str, data: Dict[str, Any], **kwargs: Any
     ) -> Dict[str, Any]:
         url = self.base_url + endpoint
-        response = self.session.request(method, url, json=data, **kwargs)
+        response = self.session.request(
+            method, url, json=data, headers=self.headers, **kwargs
+        )
         self._check_response(response)
         return response.json()['resultado']
 
