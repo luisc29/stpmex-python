@@ -27,14 +27,12 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 -----END ENCRYPTED PRIVATE KEY-----"""
 
 
-@pytest.mark.skip("still haven't worked on production")
 @pytest.mark.vcr
-def test_forbidden_without_vpn(orden):
-    client = Client('TAMIZI', PKEY, '12345678')
-    client.ordenes.create()
+def test_forbidden_without_vpn(client):
+    client = Client('TAMIZI', PKEY, '12345678', demo=False)
     with pytest.raises(HTTPError) as exc_info:
-        orden.registra()
-    assert exc_info.value.status_code == 403
+        client.put('/ordenPago/registra', dict(firma=''))
+    assert exc_info.value.response.status_code == 400
 
 
 def test_incorrect_passphrase():
@@ -42,12 +40,10 @@ def test_incorrect_passphrase():
         Client('TAMIZI', PKEY, 'incorrect')
 
 
-@pytest.mark.skip()
 @pytest.mark.vcr
-def test_response_error(orden):
-    orden.medioEntrega = 9999999
+def test_response_error(client):
     with pytest.raises(StpmexException) as exc_info:
-        orden.registra()
+        client.put('/ordenPago/registra', dict(firma=''))
     exc = exc_info.value
     assert exc.descripcionError
     assert repr(exc)

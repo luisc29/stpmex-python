@@ -1,0 +1,33 @@
+interactions:
+- request:
+    body: '{"firma": ""}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '13'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: PUT
+    uri: https://demo.stpmex.com:7024/speidemows/rest/ordenPago/registra
+  response:
+    body:
+      string: "{\"resultado\":{\"descripcionError\":\"No se recibi\xF3 respuesta del
+        servicio\",\"id\":0}}"
+    headers:
+      Content-Length:
+      - '81'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 26 Dec 2019 05:57:35 GMT
+    status:
+      code: 200
+      message: OK
+version: 1

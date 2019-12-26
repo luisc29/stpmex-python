@@ -1,7 +1,7 @@
 import random
 import time
 import unicodedata
-from dataclasses import asdict, field
+from dataclasses import field
 from typing import Any, ClassVar, Dict, Optional, Type
 
 import clabe
@@ -67,15 +67,9 @@ class Orden(Resource):
         joined_fields = join_fields(self, ORDEN_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
 
-    def to_dict(self):
-        base = {k: v for k, v in asdict(self).items() if v}
-        return {**base, **dict(firma=self.firma, empresa=self.empresa)}
-
     def _registra(self) -> Dict[str, Any]:
         endpoint = self._endpoint + '/registra'
         resp = self._client.put(endpoint, self.to_dict())
-        if 'descripcionError' in resp and resp.json():
-            raise StpmexException(**resp.json())
         return resp
 
     def __post_init__(self):

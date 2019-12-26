@@ -1,0 +1,42 @@
+interactions:
+- request:
+    body: '{"firma": ""}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '13'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: PUT
+    uri: https://prod.stpmex.com/spei/rest/ordenPago/registra
+  response:
+    body:
+      string: "<html>\n\n<body bgcolor=\"#dcdcdc\">\n<div style=\"position:absolute;width:750px;height:350px;\">\n
+        \   <div style=\"width:60%;border: darkblue groove medium;text-align: center;\">\n
+        \       <br/>\n        <br/>\n        <div>\n            <span style=\"font-size:
+        30px\">Enlace Financiero Spei</span>\n        </div>\n        <br/>\n        <br/>\n
+        \       <br/>\n        <div>\n            <span style=\"font-size: 18px\">No
+        se puede procesar la petici&oacute;n</span>\n        </div>\n        <br/>\n
+        \       <br/>\n    </div>\n</div>\n</body>\n</html>\n\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '522'
+      Content-Type:
+      - text/html
+      Date:
+      - Thu, 26 Dec 2019 06:12:43 GMT
+      Server:
+      - nginx/1.16.1
+    status:
+      code: 400
+      message: Bad Request
+version: 1

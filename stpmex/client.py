@@ -3,11 +3,11 @@ from typing import Any, ClassVar, Dict
 from OpenSSL import crypto
 from requests import Response, Session
 
-from .exc import InvalidPassphrase
+from .exc import InvalidPassphrase, StpmexException
 from .resources import Orden, Resource
 
 DEMO_BASE_URL = 'https://demo.stpmex.com:7024/speidemows/rest'
-PROD_BASE_URL = 'https://prod.stpmex.com:443/spei/rest'  # Unverified
+PROD_BASE_URL = 'https://prod.stpmex.com/spei/rest'  # Unverified
 
 
 class Client:
@@ -59,5 +59,7 @@ class Client:
     @staticmethod
     def _check_response(response: Response) -> None:
         if response.ok:
-            return
+            resultado = response.json()['resultado']
+            if 'descripcionError' in resultado:
+                raise StpmexException(**resultado)
         response.raise_for_status()
