@@ -110,7 +110,7 @@ class Orden(Resource):
         v = unicodedata.normalize('NFKD', v).encode('ascii', 'ignore')
         return v.decode('ascii')
 
-    def registra(self):
+    def _registra(self):
         url = self.base_url + 'ordenPago/registra'
         orden_dict = asdict(self)
         orden_dict['empresa'] = self.empresa
@@ -120,3 +120,8 @@ class Orden(Resource):
         if 'descripcionError' in resp and resp.json():
             raise StpmexException(**resp.json())
         return resp.json()
+
+    @classmethod
+    def create(cls, **kwargs):
+        orden = cls(**kwargs)
+        return orden._registra()

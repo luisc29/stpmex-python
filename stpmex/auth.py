@@ -5,7 +5,6 @@ from OpenSSL import crypto
 
 from .resources import Resource
 
-
 ORDEN_FIELDNAMES = """
     institucionContraparte
     empresa

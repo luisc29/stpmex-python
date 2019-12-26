@@ -5,6 +5,7 @@ from pydantic import ValidationError
 from stpmex import Orden
 
 ORDEN_KWARGS = dict(
+    empresa='TAMIZI',
     institucionContraparte='40072',
     claveRastreo='CR1564969083',
     monto=1.2,

@@ -28,11 +28,7 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 @pytest.fixture
 def client():
     pkey_passphrase = '12345678'
-    yield Client(
-        priv_key=PKEY,
-        priv_key_passphrase=pkey_passphrase,
-        demo=True,
-    )
+    yield Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase, demo=True)
 
 
 @pytest.fixture

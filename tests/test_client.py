@@ -27,44 +27,29 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 -----END ENCRYPTED PRIVATE KEY-----"""
 
 
-def test_client():
-    pkey_passphrase = '12345678'
-    empresa = 'TAMIZI'
-    client = Client(
-        empresa=empresa,
-        priv_key=PKEY,
-        priv_key_passphrase=pkey_passphrase,
-        demo=True,
-    )
-    assert client.soap_client.get_type('ns0:ordenPagoWS')
-
-
+@pytest.mark.skip("still haven't worked on production")
 @pytest.mark.vcr
 def test_forbidden_without_vpn(orden):
     pkey_passphrase = '12345678'
-    empresa = 'TAMIZI'
-    client = Client(
-        empresa=empresa, priv_key=PKEY, priv_key_passphrase=pkey_passphrase
-    )
+    client = Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase)
+    client.ordenes.create()
     with pytest.raises(TransportError) as exc_info:
-        client.registrar_orden(orden)
+        orden.registra()
     assert exc_info.value.status_code == 403
 
 
 def test_incorrect_passphrase():
     pkey_passphrase = 'incorrect'
-    empresa = 'TAMIZI'
     with pytest.raises(InvalidPassphrase):
-        Client(
-            empresa=empresa, priv_key=PKEY, priv_key_passphrase=pkey_passphrase
-        )
+        Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase, demo=True)
 
 
+@pytest.mark.skip()
 @pytest.mark.vcr
-def test_response_error(client, orden):
+def test_response_error(orden):
     orden.medioEntrega = 9999999
     with pytest.raises(StpmexException) as exc_info:
-        client.registrar_orden(orden)
+        orden.registra()
     exc = exc_info.value
     assert exc.descripcionError
     assert repr(exc)
