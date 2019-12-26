@@ -27,6 +27,10 @@ def digits(
 
 @dataclass
 class Orden(Resource):
+    """
+    Base on:
+    https://stpmex.zendesk.com/hc/es/articles/360002682851-RegistraOrden-Dispersi%C3%B3n-
+    """
     _endpoint: ClassVar[str] = '/ordenPago'
 
     monto: PositiveFloat
@@ -67,6 +71,10 @@ class Orden(Resource):
 
     @property
     def firma(self):
+        """
+        Based on:
+        https://stpmex.zendesk.com/hc/es/articles/360002796012-Firmas-Electr%C3%B3nicas-
+        """
         joined_fields = join_fields(self, ORDEN_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
 
