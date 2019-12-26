@@ -28,14 +28,14 @@ make test
 ## Uso básico
 
 ```python
-from stpmex import Client, Orden
+from stpmex import Client
 
 client = Client(
     empresa='TU_EMPRESA',
     priv_key='PKEY_CONTENIDO',
     priv_key_passphrase='supersecret'
 )
-resp = client.ordenes.create(
+orden = client.ordenes.create(
     institucionContraparte='40072',
     monto=1.2,
     nombreBeneficiario='Ricardo Sanchez',
@@ -43,5 +43,4 @@ resp = client.ordenes.create(
     cuentaBeneficiario='072691004495711499',
     conceptoPago='Prueba',
 )
-orden_id = resp['id']
 ```

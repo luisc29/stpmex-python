@@ -57,10 +57,14 @@ class Orden(Resource):
     topologia: str = 'T'
     iva: Optional[float] = None
 
+    id: Optional[int] = None
+
     @classmethod
     def create(cls, **kwargs):
         orden = cls(**kwargs)
-        return orden._registra()
+        resp = orden._registra()
+        orden.id = resp['id']
+        return orden
 
     @property
     def firma(self):
