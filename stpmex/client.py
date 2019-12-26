@@ -44,23 +44,17 @@ class Client:
         Resource._client = self
 
     def put(
-        self, endpoint: str, data: Dict[str, Any], firma: str, **kwargs: Any
+        self, endpoint: str, data: Dict[str, Any], **kwargs: Any
     ) -> Dict[str, Any]:
-        return self.request('put', endpoint, data, firma, **kwargs)
+        return self.request('put', endpoint, data, **kwargs)
 
     def request(
-        self,
-        method: str,
-        endpoint: str,
-        data: Dict[str, Any],
-        firma: str,
-        **kwargs: Any,
+        self, method: str, endpoint: str, data: Dict[str, Any], **kwargs: Any
     ) -> Dict[str, Any]:
         url = self.base_url + endpoint
-        data = {**data, **dict(firma=firma, empresa=self.empresa)}
         response = self.session.request(method, url, json=data, **kwargs)
         self._check_response(response)
-        return response.json()
+        return response.json()['resultado']
 
     @staticmethod
     def _check_response(response: Response) -> None:

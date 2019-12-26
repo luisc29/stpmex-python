@@ -2,11 +2,11 @@ interactions:
 - request:
     body: '{"monto": 1.2, "conceptoPago": "Prueba", "nombreBeneficiario": "Ricardo
       Sanchez", "cuentaBeneficiario": "072691004495711499", "institucionContraparte":
-      "40072", "tipoCuentaBeneficiario": 40, "nombreOrdenante": null, "cuentaOrdenante":
-      null, "institucionOperante": "90646", "tipoCuentaOrdenante": null, "claveRastreo":
-      "CR1577333851", "referenciaNumerica": 5273144, "rfcCurpBeneficiario": "ND",
-      "rfcCurpOrdenante": null, "medioEntrega": 3, "prioridad": 1, "tipoPago": 1,
-      "topologia": "T", "iva": null, "empresa": "TAMIZI", "firma": "Bct3jhWgQlX2oCNIgDssMMmMtIVCXTcVGWI0zvIavmhivv0PpA7x0sB5+VPOvLp/Yw5+WcV2J7dtfw1WeksrFPq2K5Xy7tq5KTTx2+YtohRX6NZ1nlRSdt/oBEgqLOKPEk8uYZhUfL0XaCrdi3XIdCNhYGXyEzwwqraz4I7OHf0="}'
+      "40072", "tipoCuentaBeneficiario": 40, "institucionOperante": "90646", "claveRastreo":
+      "CR1577337869", "referenciaNumerica": 5273144, "rfcCurpBeneficiario": "ND",
+      "medioEntrega": 3, "prioridad": 1, "tipoPago": 1, "topologia": "T", "firma":
+      "rdtPTHzmsLvaAMB5PCkkrDfMBXe/ySuQyCCkjSMSfrKKwVjeYv8TndVUnweptZCrkwqMHGZP7DLazYLtRV8nXzV7faJ7+mUVkuedzeR68EWPNPKi6MVu0G2UfhwMs5iUM7guHQ+k3SYth07uhUQ0V6Gl2NsGyQJNuYN6WlmtqIA=",
+      "empresa": "TAMIZI"}'
     headers:
       Accept:
       - '*/*'
@@ -15,7 +15,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '706'
+      - '588'
       Content-Type:
       - application/json
       User-Agent:
@@ -24,14 +24,14 @@ interactions:
     uri: https://demo.stpmex.com:7024/speidemows/rest/ordenPago/registra
   response:
     body:
-      string: '{"resultado":{"descripcionError":"Error validando la firma","id":0}}'
+      string: '{"resultado":{"id":0}}'
     headers:
       Content-Length:
-      - '68'
+      - '22'
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Dec 2019 04:17:32 GMT
+      - Thu, 26 Dec 2019 05:24:30 GMT
     status:
       code: 200
       message: OK

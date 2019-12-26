@@ -62,11 +62,18 @@ class Orden(Resource):
         orden = cls(**kwargs)
         return orden._registra()
 
+    @property
+    def firma(self):
+        joined_fields = join_fields(self, ORDEN_FIELDNAMES)
+        return compute_signature(self._client.pkey, joined_fields)
+
+    def to_dict(self):
+        base = {k: v for k, v in asdict(self).items() if v}
+        return {**base, **dict(firma=self.firma, empresa=self.empresa)}
+
     def _registra(self) -> Dict[str, Any]:
         endpoint = self._endpoint + '/registra'
-        joined_fields = join_fields(self, ORDEN_FIELDNAMES)
-        firma = compute_signature(self._client.pkey, joined_fields)
-        resp = self._client.put(endpoint, asdict(self), firma=firma)
+        resp = self._client.put(endpoint, self.to_dict())
         if 'descripcionError' in resp and resp.json():
             raise StpmexException(**resp.json())
         return resp
