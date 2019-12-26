@@ -32,18 +32,21 @@ class Client:
         else:
             self.base_url = PROD_BASE_URL
         try:
-            self._pkey = crypto.load_privatekey(
+            self.pkey = crypto.load_privatekey(
                 crypto.FILETYPE_PEM,
                 priv_key,
                 priv_key_passphrase.encode('ascii'),
             )
         except crypto.Error:
             raise InvalidPassphrase
+        self.empresa = empresa
         Resource.empresa = empresa
         Resource._client = self
 
-    def put(self, endpoint: str, **kwargs: Any) -> Dict[str, Any]:
-        return self.request('put', endpoint, **kwargs)
+    def put(
+        self, endpoint: str, data: Dict[str, Any], firma: str, **kwargs: Any
+    ) -> Dict[str, Any]:
+        return self.request('put', endpoint, data, firma, **kwargs)
 
     def request(
         self,
@@ -54,7 +57,7 @@ class Client:
         **kwargs: Any,
     ) -> Dict[str, Any]:
         url = self.base_url + endpoint
-        data = {**data, **dict(firma=firma)}
+        data = {**data, **dict(firma=firma, empresa=self.empresa)}
         response = self.session.request(method, url, json=data, **kwargs)
         self._check_response(response)
         return response.json()

@@ -2,7 +2,7 @@ import random
 import time
 import unicodedata
 from dataclasses import asdict, field
-from typing import ClassVar, Optional, Type
+from typing import Any, ClassVar, Dict, Optional, Type
 
 import clabe
 from pydantic import PositiveFloat, conint, constr, validator
@@ -62,6 +62,15 @@ class Orden(Resource):
         orden = cls(**kwargs)
         return orden._registra()
 
+    def _registra(self) -> Dict[str, Any]:
+        endpoint = self._endpoint + '/registra'
+        joined_fields = join_fields(self, ORDEN_FIELDNAMES)
+        firma = compute_signature(self._client.pkey, joined_fields)
+        resp = self._client.put(endpoint, asdict(self), firma=firma)
+        if 'descripcionError' in resp and resp.json():
+            raise StpmexException(**resp.json())
+        return resp
+
     def __post_init__(self):
         # Test before Pydantic coerces it to a float
         if not isinstance(self.monto, float):
@@ -112,14 +121,3 @@ class Orden(Resource):
     def _unicode_to_ascii(cls, v):
         v = unicodedata.normalize('NFKD', v).encode('ascii', 'ignore')
         return v.decode('ascii')
-
-    def _registra(self):
-        url = self._client.base_url + self._endpoint + '/registra'
-        orden_dict = asdict(self)
-        orden_dict['empresa'] = self.empresa
-        joined_fields = join_fields(orden_dict, ORDEN_FIELDNAMES)
-        firma = compute_signature(self._pkey, joined_fields)
-        resp = self._client.put(url, json=orden_dict, firma=firma)
-        if 'descripcionError' in resp and resp.json():
-            raise StpmexException(**resp.json())
-        return resp.json()

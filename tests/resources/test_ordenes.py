@@ -4,8 +4,8 @@ import pytest
 
 
 @pytest.mark.vcr
-def test_registrar_orden(client, orden):
+def test_registrar_orden(orden):
     orden.claveRastreo = f'CR{int(time.time())}'
-    resp = client.registrar_orden(orden)
-    assert resp['descripcionError'] is None
+    resp = orden._registra()
+    assert resp['resultado']['descripcionError'] is None
     assert isinstance(resp['id'], int)
