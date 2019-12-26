@@ -9,3 +9,11 @@ def test_registrar_orden(orden):
     resp = orden._registra()
     assert resp.get('descripcionError') is None
     assert isinstance(resp['id'], int)
+
+
+@pytest.mark.vcr
+def test_create_orden(client, orden_dict):
+    orden_dict['claveRastreo'] = f'CR{int(time.time())}'
+    resp = client.ordenes.create(**orden_dict)
+    assert resp.get('descripcionError') is None
+    assert isinstance(resp['id'], int)

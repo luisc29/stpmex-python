@@ -33,8 +33,8 @@ def client():
 
 
 @pytest.fixture
-def orden(client):
-    yield Orden(
+def orden_dict():
+    yield dict(
         institucionContraparte='40072',
         claveRastreo='CR1564969083',
         monto=1.2,
@@ -54,3 +54,8 @@ def orden(client):
         prioridad=1,
         iva=None,
     )
+
+
+@pytest.fixture
+def orden(client, orden_dict):
+    yield Orden(**orden_dict)

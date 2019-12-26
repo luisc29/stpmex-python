@@ -35,7 +35,7 @@ client = Client(
     priv_key='PKEY_CONTENIDO',
     priv_key_passphrase='supersecret'
 )
-orden = Orden(
+resp = client.ordenes.create(
     institucionContraparte='40072',
     monto=1.2,
     nombreBeneficiario='Ricardo Sanchez',
@@ -43,6 +43,5 @@ orden = Orden(
     cuentaBeneficiario='072691004495711499',
     conceptoPago='Prueba',
 )
-resp = client.registrar_orden(orden)
 orden_id = resp['id']
 ```
