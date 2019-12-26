@@ -9,7 +9,7 @@ class Resource:
 
     @property
     def firma(self):
-        ...
+        ...  # pragma: no cover
 
     def to_dict(self) -> Dict[str, Any]:
         base = {k: v for k, v in asdict(self).items() if v}
