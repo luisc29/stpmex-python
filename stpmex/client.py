@@ -7,7 +7,7 @@ from .exc import InvalidPassphrase, StpmexException
 from .resources import Orden, Resource
 
 DEMO_BASE_URL = 'https://demo.stpmex.com:7024/speidemows/rest'
-PROD_BASE_URL = 'https://prod.stpmex.com/spei/rest'  # Unverified
+PROD_BASE_URL = 'https://prod.stpmex.com/speiws/rest'
 
 
 class Client:

@@ -31,8 +31,8 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 def test_forbidden_without_vpn(client):
     client = Client('TAMIZI', PKEY, '12345678', demo=False)
     with pytest.raises(HTTPError) as exc_info:
-        client.put('/ordenPago/registra', dict(firma=''))
-    assert exc_info.value.response.status_code == 400
+        client.request('get', '/application.wadl', dict(firma=''))
+    assert exc_info.value.response.status_code == 403
 
 
 def test_incorrect_passphrase():
