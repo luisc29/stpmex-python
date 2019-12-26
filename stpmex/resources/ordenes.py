@@ -9,7 +9,6 @@ from pydantic import PositiveFloat, conint, constr, validator
 from pydantic.dataclasses import dataclass
 
 from ..auth import ORDEN_FIELDNAMES, compute_signature, join_fields
-from ..exc import StpmexException
 from ..types import Prioridad, TipoCuenta
 from .base import Resource
 
