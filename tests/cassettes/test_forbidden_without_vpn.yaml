@@ -1,6 +1,6 @@
 interactions:
 - request:
-    body: '{"firma": ""}'
+    body: '{}'
     headers:
       Accept:
       - '*/*'
@@ -9,7 +9,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '13'
+      - '2'
       Content-Type:
       - application/json
       User-Agent:
@@ -28,7 +28,7 @@ interactions:
       Content-Type:
       - text/html
       Date:
-      - Thu, 26 Dec 2019 06:42:30 GMT
+      - Thu, 26 Dec 2019 07:03:15 GMT
       Server:
       - nginx/1.16.1
     status:
