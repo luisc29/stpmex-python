@@ -27,14 +27,14 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 
 @pytest.fixture
 def client():
+    empresa = 'TAMIZI'
     pkey_passphrase = '12345678'
-    yield Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase, demo=True)
+    yield Client(empresa, PKEY, pkey_passphrase, demo=True)
 
 
 @pytest.fixture
-def orden():
+def orden(client):
     yield Orden(
-        empresa='TAMIZI',
         institucionContraparte='40072',
         claveRastreo='CR1564969083',
         monto=1.2,

@@ -19,7 +19,11 @@ class Client:
     ordenes: ClassVar = Orden
 
     def __init__(
-        self, priv_key: str, priv_key_passphrase: str, demo: bool = False
+        self,
+        empresa: str,
+        priv_key: str,
+        priv_key_passphrase: str,
+        demo: bool = False,
     ):
         self.session = Session()
         if demo:
@@ -34,6 +38,7 @@ class Client:
             )
         except crypto.Error:
             raise InvalidPassphrase
+        Resource.empresa = empresa
         Resource._client = self
 
     def put(self, endpoint: str, **kwargs: Any) -> Dict[str, Any]:

@@ -30,8 +30,6 @@ def digits(
 class Orden(Resource):
     _endpoint: ClassVar[str] = '/ordenPago'
 
-    empresa: str
-
     monto: PositiveFloat
     conceptoPago: truncated_str(39)
 
@@ -58,6 +56,11 @@ class Orden(Resource):
     tipoPago: int = 1
     topologia: str = 'T'
     iva: Optional[float] = None
+
+    @classmethod
+    def create(cls, **kwargs):
+        orden = cls(**kwargs)
+        return orden._registra()
 
     def __post_init__(self):
         # Test before Pydantic coerces it to a float
@@ -120,8 +123,3 @@ class Orden(Resource):
         if 'descripcionError' in resp and resp.json():
             raise StpmexException(**resp.json())
         return resp.json()
-
-    @classmethod
-    def create(cls, **kwargs):
-        orden = cls(**kwargs)
-        return orden._registra()
