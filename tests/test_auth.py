@@ -15,5 +15,5 @@ def test_compute_signature(client, orden):
         'Ah6CdTEQn9q1O7VClOLdRqjNVluOLtDhm4iq5R7ew9+tjjHMJAv7JtSX7W9v55NtR9/jZ'
         '7RhSUbvEvS06Tfxq5CX+Ct7ySDOOiaOpM='
     )
-    sig = compute_signature(client._pkey, join_fields(orden, ORDEN_FIELDNAMES))
+    sig = compute_signature(client.pkey, join_fields(orden, ORDEN_FIELDNAMES))
     assert sig == firma

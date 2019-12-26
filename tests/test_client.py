@@ -30,8 +30,7 @@ uzF/x9tl2+BdiDjPOhSRuoa1ypilODdpOGKNKuf0vu2jAbbzDILBYOfw
 @pytest.mark.skip("still haven't worked on production")
 @pytest.mark.vcr
 def test_forbidden_without_vpn(orden):
-    pkey_passphrase = '12345678'
-    client = Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase)
+    client = Client('TAMIZI', PKEY, '12345678')
     client.ordenes.create()
     with pytest.raises(TransportError) as exc_info:
         orden.registra()
@@ -39,9 +38,8 @@ def test_forbidden_without_vpn(orden):
 
 
 def test_incorrect_passphrase():
-    pkey_passphrase = 'incorrect'
     with pytest.raises(InvalidPassphrase):
-        Client(priv_key=PKEY, priv_key_passphrase=pkey_passphrase, demo=True)
+        Client('TAMIZI', PKEY, 'incorrect')
 
 
 @pytest.mark.skip()
