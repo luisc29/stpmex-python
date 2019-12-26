@@ -6,7 +6,8 @@ from requests import Response, Session
 from .exc import InvalidPassphrase
 from .resources import Orden, Resource
 
-DEMO_BASE_URL = 'https://demo.stpmex.com:7024/speidemows/rest/'
+DEMO_BASE_URL = 'https://demo.stpmex.com:7024/speidemows/rest'
+PROD_BASE_URL = 'https://prod.stpmex.com:443/spei/rest'  # Unverified
 
 
 class Client:
@@ -29,7 +30,7 @@ class Client:
         if demo:
             self.base_url = DEMO_BASE_URL
         else:
-            raise NotImplementedError('Sólo funciona en demo por ahora.')
+            self.base_url = PROD_BASE_URL
         try:
             self._pkey = crypto.load_privatekey(
                 crypto.FILETYPE_PEM,

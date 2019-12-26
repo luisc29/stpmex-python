@@ -114,7 +114,7 @@ class Orden(Resource):
         return v.decode('ascii')
 
     def _registra(self):
-        url = self.base_url + 'ordenPago/registra'
+        url = self._client.base_url + self._endpoint + '/registra'
         orden_dict = asdict(self)
         orden_dict['empresa'] = self.empresa
         joined_fields = join_fields(orden_dict, ORDEN_FIELDNAMES)
