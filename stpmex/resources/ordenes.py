@@ -2,7 +2,7 @@ import random
 import time
 import unicodedata
 from dataclasses import field
-from typing import Any, ClassVar, Dict, Optional
+from typing import ClassVar, Optional
 
 import clabe
 from pydantic import PositiveFloat, conint, constr, validator
@@ -56,7 +56,8 @@ class Orden(Resource):
     @classmethod
     def create(cls, **kwargs):
         orden = cls(**kwargs)
-        resp = orden._registra()
+        endpoint = orden._endpoint + '/registra'
+        resp = orden._client.put(endpoint, orden.to_dict())
         orden.id = resp['id']
         return orden
 
@@ -68,11 +69,6 @@ class Orden(Resource):
         """
         joined_fields = join_fields(self, ORDEN_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
-
-    def _registra(self) -> Dict[str, Any]:
-        endpoint = self._endpoint + '/registra'
-        resp = self._client.put(endpoint, self.to_dict())
-        return resp
 
     def __post_init__(self):
         # Test before Pydantic coerces it to a float

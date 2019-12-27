@@ -46,10 +46,11 @@ class Client:
         Resource.empresa = empresa
         Resource._client = self
 
-    def put(
-        self, endpoint: str, data: Dict[str, Any], **kwargs: Any
-    ) -> Dict[str, Any]:
-        return self.request('put', endpoint, data, **kwargs)
+    def put(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        return self.request('put', endpoint, data)
+
+    def delete(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        return self.request('delete', endpoint, data)
 
     def request(
         self, method: str, endpoint: str, data: Dict[str, Any], **kwargs: Any

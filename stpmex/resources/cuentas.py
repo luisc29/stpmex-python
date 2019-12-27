@@ -1,6 +1,6 @@
 import datetime as dt
 import unicodedata
-from typing import Any, ClassVar, Dict, Optional
+from typing import ClassVar, Optional
 
 from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
@@ -47,19 +47,25 @@ class Cuenta(Resource):
     @classmethod
     def create(cls, **kwargs):
         cuenta = cls(**kwargs)
-        resp = cuenta._alta_fisica()
+        endpoint = cuenta._endpoint + '/fisica'
+        resp = cuenta._client.put(endpoint, cuenta.to_dict())
         cuenta.id = resp['id']
         return cuenta
+
+    def delete(self):
+        endpoint = self._endpoint + '/fisica'
+        data = dict(
+            cuenta=self.cuenta,
+            empresa=self.empresa,
+            rfcCurp=self.rfcCurp,
+            firma=self.firma,
+        )
+        return self._client.delete(endpoint, data)
 
     @property
     def firma(self):
         joined_fields = join_fields(self, CUENTA_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
-
-    def _alta_fisica(self) -> Dict[str, Any]:
-        endpoint = self._endpoint + '/fisica'
-        resp = self._client.put(endpoint, self.to_dict())
-        return resp
 
     @validator('nombre', 'apellidoPaterno', 'apellidoMaterno', each_item=True)
     def _unicode_to_ascii(cls, v):
