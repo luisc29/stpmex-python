@@ -59,12 +59,21 @@ class Client:
             method, url, json=data, headers=self.headers, **kwargs
         )
         self._check_response(response)
-        return response.json()['resultado']
+        resultado = response.json()
+        try:
+            resultado = resultado['resultado']
+        except KeyError:
+            ...
+        return resultado
 
     @staticmethod
     def _check_response(response: Response) -> None:
         if response.ok:
-            resultado = response.json()['resultado']
-            if 'descripcionError' in resultado:
-                raise StpmexException(**resultado)
+            resp = response.json()
+            try:
+                if 'descripcionError' in resp['resultado']:
+                    raise StpmexException(**resp['resultado'])
+            except KeyError:
+                if 'descripcion' in resp and resp['descripcion']:
+                    raise StpmexException(**resp)
         response.raise_for_status()

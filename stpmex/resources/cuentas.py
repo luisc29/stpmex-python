@@ -1,7 +1,8 @@
 import datetime as dt
+import unicodedata
 from typing import Any, ClassVar, Dict, Optional
 
-from pydantic import conint, constr
+from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
 
 from ..auth import CUENTA_FIELDNAMES, compute_signature, join_fields
@@ -21,7 +22,7 @@ class Cuenta(Resource):
     nombre: truncated_str(50)
     apellidoPaterno: truncated_str(50)
     cuenta: digits(18, 18)
-    rfcCurp: digits(max_length=18)
+    rfcCurp: constr(max_length=18)
 
     apellidoMaterno: Optional[truncated_str(50)] = None
     genero: Optional[constr(regex=r'H|M')] = None
@@ -56,6 +57,11 @@ class Cuenta(Resource):
         return compute_signature(self._client.pkey, joined_fields)
 
     def _alta_fisica(self) -> Dict[str, Any]:
-        endpoint = self._endpoint + '/altaFisica'
+        endpoint = self._endpoint + '/fisica'
         resp = self._client.put(endpoint, self.to_dict())
         return resp
+
+    @validator('nombre', 'apellidoPaterno', 'apellidoMaterno', each_item=True)
+    def _unicode_to_ascii(cls, v):
+        v = unicodedata.normalize('NFKD', v).encode('ascii', 'ignore')
+        return v.decode('ascii')

@@ -7,9 +7,9 @@ from .resources import Resource
 
 CUENTA_FIELDNAMES = """
     empresa
-    cuetna
+    cuenta
     rfcCurp
-"""
+""".split()
 
 
 ORDEN_FIELDNAMES = """

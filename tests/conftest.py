@@ -1,7 +1,7 @@
 import pytest
 
 from stpmex import Client
-from stpmex.resources import Orden
+from stpmex.resources import Cuenta, Orden
 
 PKEY = """Bag Attributes
     friendlyName: prueba
@@ -60,3 +60,19 @@ def orden_dict():
 @pytest.fixture
 def orden(client, orden_dict):
     yield Orden(**orden_dict)
+
+
+@pytest.fixture
+def cuenta_dict():
+    yield dict(
+        nombre='Eduardo',
+        apellidoPaterno='Salvador',
+        apellidoMaterno='Hernández',
+        rfcCurp='rfcrfc',
+        cuenta='646180110400000007',
+    )
+
+
+@pytest.fixture
+def cuenta(client, cuenta_dict):
+    yield Cuenta(**cuenta_dict)
