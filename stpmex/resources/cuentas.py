@@ -30,7 +30,7 @@ class Cuenta(Resource):
     entidadFederitva: Optional[conint(ge=1, le=32)] = None
     actividadEconimica: Optional[conint(ge=28, le=74)] = None
     calle: Optional[truncated_str(60)] = None
-    # Hmmm ... should REALLY support alphanumeric
+    # Hmmm ... why aren't numExterion and numInterior alphanumeric???
     numExterior: Optional[digits(max_length=10)] = None
     numInterior: Optional[digits(max_length=5)] = None
     colonia: Optional[truncated_str(50)] = None
@@ -41,10 +41,21 @@ class Cuenta(Resource):
     idIdentificacion: Optional[digits(max_length=20)] = None
     telefono: Optional[digits(max_length=10)] = None
 
+    id: Optional[int] = None
+
+    @classmethod
+    def create(cls, **kwargs):
+        cuenta = cls(**kwargs)
+        resp = cuenta._alta_fisica()
+        cuenta.id = resp['id']
+        return cuenta
+
     @property
     def firma(self):
         joined_fields = join_fields(self, CUENTA_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
 
     def _alta_fisica(self) -> Dict[str, Any]:
-        ...
+        endpoint = self._endpoint + '/altaFisica'
+        resp = self._client.put(endpoint, self.to_dict())
+        return resp
