@@ -1,5 +1,5 @@
 import datetime as dt
-from typing import Any, Dict, Optional
+from typing import Any, ClassVar, Dict, Optional
 
 from pydantic import conint, constr
 from pydantic.dataclasses import dataclass
@@ -16,7 +16,7 @@ class Cuenta(Resource):
     https://stpmex.zendesk.com/hc/es/articles/360038242071-Registro-de-Cuentas-de-Personas-f%C3%ADsicas
     """
 
-    _endpoint = '/cuentaModule'
+    _endpoint: ClassVar[str] = '/cuentaModule'
 
     nombre: truncated_str(50)
     apellidoPaterno: truncated_str(50)
@@ -30,7 +30,7 @@ class Cuenta(Resource):
     entidadFederitva: Optional[conint(ge=1, le=32)] = None
     actividadEconimica: Optional[conint(ge=28, le=74)] = None
     calle: Optional[truncated_str(60)] = None
-    # Hmmm ... why aren't numExterion and numInterior alphanumeric???
+    # Hmmm ... why aren't numExterior and numInterior alphanumeric???
     numExterior: Optional[digits(max_length=10)] = None
     numInterior: Optional[digits(max_length=5)] = None
     colonia: Optional[truncated_str(50)] = None

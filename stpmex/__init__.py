@@ -1,5 +1,4 @@
-__all__ = ['Client', 'Cuenta', 'Orden', '__version__']
+__all__ = ['__version__', 'Client']
 
 from .client import Client
-from .resources import Cuenta, Orden
 from .version import __version__

@@ -2,7 +2,7 @@ import clabe
 import pytest
 from pydantic import ValidationError
 
-from stpmex import Orden
+from stpmex.resources import Orden
 
 ORDEN_KWARGS = dict(
     institucionContraparte='40072',
