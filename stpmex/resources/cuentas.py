@@ -28,16 +28,16 @@ class Cuenta(Resource):
     genero: Optional[constr(regex=r'H|M')] = None
     fechaNacimiento: Optional[dt.date] = None
     # Not including Nacido en Extranjero is discrimination!
-    entidadFederitva: Optional[conint(ge=1, le=32)] = None
-    actividadEconimica: Optional[conint(ge=28, le=74)] = None
+    entidadFederativa: Optional[conint(ge=1, le=32)] = None
+    actividadEconomica: Optional[conint(ge=28, le=74)] = None
     calle: Optional[truncated_str(60)] = None
     # Hmmm ... why aren't numExterior and numInterior alphanumeric???
-    numExterior: Optional[digits(max_length=10)] = None
-    numInterior: Optional[digits(max_length=5)] = None
+    numeroExterior: Optional[digits(max_length=10)] = None
+    numeroInterior: Optional[digits(max_length=5)] = None
     colonia: Optional[truncated_str(50)] = None
     alcaldiaMunicipio: Optional[truncated_str(50)] = None
-    codigoPostal: Optional[digits(5, 5)] = None
-    paisNacimiento: Optional[conint(ge=1, lt=242)] = None
+    cp: Optional[digits(5, 5)] = None
+    pais: Optional[conint(ge=1, lt=242)] = None
     email: Optional[constr(max_length=150)] = None
     idIdentificacion: Optional[digits(max_length=20)] = None
     telefono: Optional[digits(max_length=10)] = None
