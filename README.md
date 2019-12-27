@@ -11,13 +11,18 @@ Cliente para el servicio SOAP de STP
 
 Python v3.6 o superior.
 
+## Documentación de API
+
+[General](https://stpmex.zendesk.com/hc/es) y
+[WADL](https://demo.stpmex.com:7024/speidemows/rest/application.wadl?metadata=true&detail=true)
+
 ## Instalación
 
 ```
 pip install stpmex
 ```
 
-## Test
+## Correr pruebas
 
 ```
 make venv
