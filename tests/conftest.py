@@ -1,3 +1,5 @@
+import datetime as dt
+
 import pytest
 
 from stpmex import Client
@@ -70,6 +72,8 @@ def cuenta_dict():
         apellidoMaterno='Hernández',
         rfcCurp='rfcrfc',
         cuenta='646180110400000007',
+        fechaNacimiento=dt.date(1980, 12, 30),
+        telefono='1234567890',
     )
 
 

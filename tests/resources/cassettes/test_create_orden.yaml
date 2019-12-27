@@ -3,9 +3,9 @@ interactions:
     body: '{"monto": 1.2, "conceptoPago": "Prueba", "nombreBeneficiario": "Ricardo
       Sanchez", "cuentaBeneficiario": "072691004495711499", "institucionContraparte":
       "40072", "tipoCuentaBeneficiario": 40, "institucionOperante": "90646", "claveRastreo":
-      "CR1577338218", "referenciaNumerica": 5273144, "rfcCurpBeneficiario": "ND",
+      "CR1577416027", "referenciaNumerica": 5273144, "rfcCurpBeneficiario": "ND",
       "medioEntrega": 3, "prioridad": 1, "tipoPago": 1, "topologia": "T", "firma":
-      "xR0wwpA0W3iPe/O+TK9BYGfNYfauKVlaM3bAIzfFfiBOFdwG/P0oiDFQF7nVf6cEs2npymR+I1856tAk/2poi9QYfdCsWD+IKyRSOp0cdVMS6iXpApR6UMgD7qHJ03LQZkH6gytNWnl9dF1xPO3HTqZ87J7eG+inxZRs0qH/bWE=",
+      "MmZAu6Bp9hRQhQJ/FVvJEyEsfncRXxvfslfG622K7cp58sU4bmzWC+BmNACgm1QmN62fGLI972xNMLaJ4jiuvKqDv41OJEL8PBcLjqzcJyEawzgyMUYIqWX0qO4NJsLpnQX1I6q/wr1wSYHnbD6wvuFW975PrigwDfk3diH+fF8=",
       "empresa": "TAMIZI"}'
     headers:
       Accept:
@@ -19,19 +19,19 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.22.0
+      - stpmex-python/3.0.0.dev1
     method: PUT
     uri: https://demo.stpmex.com:7024/speidemows/rest/ordenPago/registra
   response:
     body:
-      string: '{"resultado":{"id":0}}'
+      string: '{"resultado":{"id":7564151}}'
     headers:
       Content-Length:
-      - '22'
+      - '28'
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Dec 2019 05:30:19 GMT
+      - Fri, 27 Dec 2019 03:07:09 GMT
     status:
       code: 200
       message: OK

@@ -48,3 +48,10 @@ def test_response_error(client):
     assert exc.descripcionError
     assert repr(exc)
     assert str(exc)
+
+    with pytest.raises(StpmexException) as exc_info:
+        client.put('/cuentaModule/fisica', dict(firma=''))
+    exc = exc_info.value
+    assert exc.descripcion
+    assert repr(exc)
+    assert str(exc)
