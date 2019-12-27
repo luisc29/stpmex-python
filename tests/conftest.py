@@ -43,7 +43,7 @@ def orden_dict():
         monto=1.2,
         tipoPago=1,
         nombreOrdenante=None,
-        cuentaOrdenante=None,
+        cuentaOrdenante='646180110400000007',
         tipoCuentaOrdenante=None,
         rfcCurpOrdenante=None,
         tipoCuentaBeneficiario=40,
@@ -67,13 +67,24 @@ def orden(client, orden_dict):
 @pytest.fixture
 def cuenta_dict():
     yield dict(
+        cuenta='646180157099999993',
         nombre='Eduardo',
         apellidoPaterno='Salvador',
-        apellidoMaterno='Hernández',
-        rfcCurp='rfcrfc',
-        cuenta='646180110400000007',
-        fechaNacimiento=dt.date(1980, 12, 30),
-        telefono='1234567890',
+        apellidoMaterno='Hernandez',
+        rfcCurp='rfcrfc5',
+        fechaNacimiento=dt.date(1990, 4, 14),
+        genero='H',
+        entidadFederativa='1',
+        actividadEconomica='30',
+        calle='mi calle',
+        numeroExterior='2',
+        numeroInterior='1',
+        colonia='mi colonia',
+        alcaldiaMunicipio='mi alcaldia',
+        cp='12345',
+        pais='1',
+        email='asdasd@domain.com',
+        idIdentificacion='123123123',
     )
 
 

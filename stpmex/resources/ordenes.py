@@ -32,8 +32,9 @@ class Orden(Resource):
     institucionContraparte: digits(5, 5)
     tipoCuentaBeneficiario: int
 
+    cuentaOrdenante: digits(18, 18)
+
     nombreOrdenante: Optional[truncated_str(39)] = None
-    cuentaOrdenante: Optional[digits(10, 19)] = None
     institucionOperante: digits(5, 5) = STP_BANK_CODE
     tipoCuentaOrdenante: Optional[int] = None
 
@@ -54,7 +55,7 @@ class Orden(Resource):
     id: Optional[int] = None
 
     @classmethod
-    def create(cls, **kwargs):
+    def registra(cls, **kwargs):
         orden = cls(**kwargs)
         endpoint = orden._endpoint + '/registra'
         resp = orden._client.put(endpoint, orden.to_dict())

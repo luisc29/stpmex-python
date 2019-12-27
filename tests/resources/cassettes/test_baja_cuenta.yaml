@@ -1,9 +1,7 @@
 interactions:
 - request:
-    body: '{"nombre": "Eduardo", "apellidoPaterno": "Salvador", "cuenta": "646180110400000007",
-      "rfcCurp": "rfcrfc", "apellidoMaterno": "Hernandez", "fechaNacimiento": "19801230",
-      "telefono": "1234567890", "firma": "XVp3uFtcbpAV7569wj8BZfecG4JSU1ajTLKgE5+Kct6gVPUaBXjxkaH1iY2er/MDolWPOmWbQME+9HU0v3St1fimXRI5GXgecU/zkECsK0QR7EwAGD3UPe9fcVvSOFv1qSqB7OWkejd9NF/HrKTLVMLfHHmI+XzT3pjvV7vjazo=",
-      "empresa": "TAMIZI"}'
+    body: '{"cuenta": "646180110400000007", "empresa": "TAMIZI", "rfcCurp": "rfcrfc",
+      "firma": "XVp3uFtcbpAV7569wj8BZfecG4JSU1ajTLKgE5+Kct6gVPUaBXjxkaH1iY2er/MDolWPOmWbQME+9HU0v3St1fimXRI5GXgecU/zkECsK0QR7EwAGD3UPe9fcVvSOFv1qSqB7OWkejd9NF/HrKTLVMLfHHmI+XzT3pjvV7vjazo="}'
     headers:
       Accept:
       - '*/*'
@@ -12,12 +10,12 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '400'
+      - '259'
       Content-Type:
       - application/json
       User-Agent:
-      - stpmex-python/3.0.0.dev1
-    method: PUT
+      - stpmex-python/3.0.0.dev3
+    method: DELETE
     uri: https://demo.stpmex.com:7024/speidemows/rest/cuentaModule/fisica
   response:
     body:
@@ -28,7 +26,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 27 Dec 2019 03:12:58 GMT
+      - Fri, 27 Dec 2019 22:56:07 GMT
     status:
       code: 200
       message: OK

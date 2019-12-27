@@ -27,11 +27,10 @@ class Cuenta(Resource):
     apellidoMaterno: Optional[truncated_str(50)] = None
     genero: Optional[constr(regex=r'H|M')] = None
     fechaNacimiento: Optional[dt.date] = None
-    # Not including Nacido en Extranjero is discrimination!
+    # Esperanda para STP que agregan Nacido en Extranjero
     entidadFederativa: Optional[conint(ge=1, le=32)] = None
     actividadEconomica: Optional[conint(ge=28, le=74)] = None
     calle: Optional[truncated_str(60)] = None
-    # Hmmm ... why aren't numExterior and numInterior alphanumeric???
     numeroExterior: Optional[digits(max_length=10)] = None
     numeroInterior: Optional[digits(max_length=5)] = None
     colonia: Optional[truncated_str(50)] = None
@@ -45,14 +44,16 @@ class Cuenta(Resource):
     id: Optional[int] = None
 
     @classmethod
-    def create(cls, **kwargs) -> 'Cuenta':
+    def alta(cls, **kwargs) -> 'Cuenta':
+        """Dar de alta"""
         cuenta = cls(**kwargs)
         endpoint = cuenta._endpoint + '/fisica'
         resp = cuenta._client.put(endpoint, cuenta.to_dict())
         cuenta.id = resp['id']
         return cuenta
 
-    def delete(self) -> Dict[str, Any]:
+    def baja(self) -> Dict[str, Any]:
+        """Dar de baja"""
         endpoint = self._endpoint + '/fisica'
         data = dict(
             cuenta=self.cuenta,
