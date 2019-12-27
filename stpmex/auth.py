@@ -5,6 +5,13 @@ from OpenSSL import crypto
 
 from .resources import Resource
 
+CUENTA_FIELDNAMES = """
+    empresa
+    cuetna
+    rfcCurp
+"""
+
+
 ORDEN_FIELDNAMES = """
     institucionContraparte
     empresa

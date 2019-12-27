@@ -9,6 +9,7 @@ install_requires = [
     'clabe>=0.2.1,<0.3.0',
     'pydantic>=1.2,<1.3',
     'dataclasses>=0.6;python_version<"3.7"',
+    'requests>=2.22.0,<3.0',
 ]
 
 test_requires = [

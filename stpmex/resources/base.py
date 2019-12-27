@@ -1,3 +1,4 @@
+import datetime as dt
 from dataclasses import asdict
 from typing import Any, ClassVar, Dict
 
@@ -12,5 +13,10 @@ class Resource:
         ...  # pragma: no cover
 
     def to_dict(self) -> Dict[str, Any]:
-        base = {k: v for k, v in asdict(self).items() if v}
+        base = dict()
+        for k, v in asdict(self).items():
+            if isinstance(v, dt.date):
+                base[k] = v.strftime('%Y%m%d')
+            elif v:
+                base[k] = v
         return {**base, **dict(firma=self.firma, empresa=self.empresa)}
