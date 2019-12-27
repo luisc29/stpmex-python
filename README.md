@@ -41,7 +41,7 @@ client = Client(
     priv_key_passphrase='supersecret',
 )
 
-cuenta = client.cuentas.create(
+cuenta = client.cuentas.registra(
     nombre='Eduardo',
     apellidoPaterno='Salvador',
     apellidoMaterno='Hernández',
@@ -49,7 +49,7 @@ cuenta = client.cuentas.create(
     cuenta='646180110400000007',
 )
 
-orden = client.ordenes.create(
+orden = client.ordenes.alta(
     institucionContraparte='40072',
     monto=1.2,
     nombreBeneficiario='Ricardo Sanchez',
@@ -59,5 +59,5 @@ orden = client.ordenes.create(
     cuentaOrdenante='646180110400000007',
 )
 
-cuenta.delete()
+cuenta.baja()
 ```
