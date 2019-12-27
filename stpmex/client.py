@@ -61,10 +61,8 @@ class Client:
         )
         self._check_response(response)
         resultado = response.json()
-        try:
+        if 'resultado' in resultado:  # Some responses are enveloped
             resultado = resultado['resultado']
-        except KeyError:
-            ...
         return resultado
 
     @staticmethod
