@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/cuenca-mx/stpmex-python/badge.svg?branch=master)](https://coveralls.io/github/cuenca-mx/stpmex-python?branch=master)
 [![PyPI](https://img.shields.io/pypi/v/stpmex.svg)](https://pypi.org/project/stpmex/)
 
-Cliente para el servicio SOAP de STP
+Cliente para el servicio REST de STP
 
 
 ## Requerimientos
