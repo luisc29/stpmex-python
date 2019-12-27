@@ -1,6 +1,6 @@
 from importlib.machinery import SourceFileLoader
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 version = SourceFileLoader('version', 'stpmex/version.py').load_module()
 
@@ -34,7 +34,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/cuenca-mx/stpmex-python',
-    packages=['stpmex'],
+    packages=find_packages(),
     include_package_data=True,
     package_data=dict(stpmex=['py.typed']),
     python_requires='>=3.6',

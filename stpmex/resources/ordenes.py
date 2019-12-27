@@ -31,6 +31,7 @@ class Orden(Resource):
     Base on:
     https://stpmex.zendesk.com/hc/es/articles/360002682851-RegistraOrden-Dispersi%C3%B3n-
     """
+
     _endpoint: ClassVar[str] = '/ordenPago'
 
     monto: PositiveFloat
