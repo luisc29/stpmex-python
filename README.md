@@ -58,4 +58,6 @@ orden = client.ordenes.create(
     conceptoPago='Prueba',
     cuentaOrdenante='646180110400000007',
 )
+
+cuenta.delete()
 ```
