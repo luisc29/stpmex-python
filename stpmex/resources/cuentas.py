@@ -1,6 +1,6 @@
 import datetime as dt
 import unicodedata
-from typing import ClassVar, Optional
+from typing import Any, ClassVar, Dict, Optional
 
 from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
@@ -45,14 +45,14 @@ class Cuenta(Resource):
     id: Optional[int] = None
 
     @classmethod
-    def create(cls, **kwargs):
+    def create(cls, **kwargs) -> 'Cuenta':
         cuenta = cls(**kwargs)
         endpoint = cuenta._endpoint + '/fisica'
         resp = cuenta._client.put(endpoint, cuenta.to_dict())
         cuenta.id = resp['id']
         return cuenta
 
-    def delete(self):
+    def delete(self) -> Dict[str, Any]:
         endpoint = self._endpoint + '/fisica'
         data = dict(
             cuenta=self.cuenta,
