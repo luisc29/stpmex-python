@@ -38,8 +38,17 @@ from stpmex import Client
 client = Client(
     empresa='TU_EMPRESA',
     priv_key='PKEY_CONTENIDO',
-    priv_key_passphrase='supersecret'
+    priv_key_passphrase='supersecret',
 )
+
+cuenta = client.cuentas.create(
+    nombre='Eduardo',
+    apellidoPaterno='Salvador',
+    apellidoMaterno='Hernández',
+    rfcCurp='rfcrfc',
+    cuenta='646180110400000007',
+)
+
 orden = client.ordenes.create(
     institucionContraparte='40072',
     monto=1.2,
@@ -47,5 +56,6 @@ orden = client.ordenes.create(
     tipoCuentaBeneficiario=40,
     cuentaBeneficiario='072691004495711499',
     conceptoPago='Prueba',
+    cuentaOrdenante='646180110400000007',
 )
 ```
