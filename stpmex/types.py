@@ -1,7 +1,20 @@
 from enum import Enum
-from typing import Optional, Type
+from typing import TYPE_CHECKING, ClassVar, Optional, Type
 
+from clabe import BANK_NAMES, BANKS, compute_control_digit
 from pydantic import constr
+from pydantic.errors import NotDigitError
+from pydantic.types import PaymentCardNumber as PydanticPaymentCardNumber
+from pydantic.validators import (
+    constr_length_validator,
+    constr_strip_whitespace,
+    str_validator,
+)
+
+from . import exc
+
+if TYPE_CHECKING:
+    from pydantic.typing import CallableGenerator
 
 
 def truncated_str(length) -> Type:
@@ -23,3 +36,69 @@ class TipoCuenta(Enum):
     card = 3
     phone_number = 10
     clabe = 40
+
+
+def validate_digits(v: str) -> str:
+    if not v.isdigit():
+        raise NotDigitError
+    return v
+
+
+class Clabe(str):
+    """
+    Based on: https://es.wikipedia.org/wiki/CLABE
+    """
+
+    strip_whitespace: ClassVar[bool] = True
+    min_length: ClassVar[int] = 18
+    max_length: ClassVar[int] = 18
+
+    def __init__(self, clabe: str):
+        self.bank_code_3_digits = clabe[:3]
+        self.bank_code_5_digits = BANKS[clabe[:3]]
+        self.bank_name = BANK_NAMES[self.bank_code_5_digits]
+
+    @classmethod
+    def __get_validators__(cls) -> 'CallableGenerator':
+        yield str_validator
+        yield constr_strip_whitespace
+        yield constr_length_validator
+        yield validate_digits
+        yield cls.validate_bank_code
+        yield cls.validate_control_digit
+
+    @classmethod
+    def validate_digits(cls, clabe: str) -> str:
+        if not clabe.isdigit():
+            raise NotDigitError
+        return clabe
+
+    @classmethod
+    def validate_bank_code(cls, clabe: str) -> str:
+        if clabe[:3] not in BANKS.keys():
+            raise exc.BankCodeValidationError
+        return clabe
+
+    @classmethod
+    def validate_control_digit(cls, clabe: str) -> str:
+        if clabe[-1] != compute_control_digit(clabe):
+            raise exc.ClabeControlDigitValidationError
+        return clabe
+
+
+class MXPhoneNumber(str):
+    strip_whitespace: ClassVar[bool] = True
+    min_length: ClassVar[int] = 10
+    max_length: ClassVar[int] = 10
+
+    @classmethod
+    def __get_validators__(cls) -> 'CallableGenerator':
+        yield str_validator
+        yield constr_strip_whitespace
+        yield constr_length_validator
+        yield validate_digits
+
+
+class PaymentCardNumber(PydanticPaymentCardNumber):
+    min_length: ClassVar[int] = 15
+    max_length: ClassVar[int] = 16

@@ -54,20 +54,22 @@ def test_invalid_clabe():
     with pytest.raises(ValidationError) as exc_info:
         create_orden(cuentaBeneficiario=invalid_clabe)
     errors = exc_info.value.errors()
-    assert len(errors) == 1
+    assert len(errors) == 3
     error = errors[0]
-    assert error['loc'] == ('cuentaBeneficiario',)
-    assert error['type'] == 'value_error'
+    assert error['loc'][0] == 'cuentaBeneficiario'
+    assert error['type'] == 'value_error.clabe.control_digit'
 
 
 def test_wrong_length_cuentaBeneficiario():
     with pytest.raises(ValidationError) as exc_info:
         create_orden(cuentaBeneficiario='1' * 14)
     errors = exc_info.value.errors()
-    assert len(errors) == 1
-    error = errors[0]
-    assert error['loc'] == ('cuentaBeneficiario',)
-    assert error['type'] == 'value_error'
+    assert len(errors) == 3
+    assert errors[0]['type'] == 'value_error.any_str.min_length'
+    assert errors[1]['type'] == 'value_error.any_str.min_length'
+    assert errors[2]['type'] == 'value_error.any_str.max_length'
+    for error in errors:
+        assert error['loc'][0] == 'cuentaBeneficiario'
 
 
 def test_digits():
@@ -76,7 +78,7 @@ def test_digits():
     errors = exc_info.value.errors()
     assert len(errors) == 1
     error = errors[0]
-    assert error['loc'] == ('institucionContraparte',)
+    assert error['loc'][0] == 'institucionContraparte'
     assert error['type'] == 'value_error.str.regex'
 
 

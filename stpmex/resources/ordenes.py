@@ -2,14 +2,28 @@ import random
 import time
 import unicodedata
 from dataclasses import field
-from typing import ClassVar, Optional
+from typing import ClassVar, Optional, Union
 
 import clabe
-from pydantic import PositiveFloat, conint, constr, validator
+from pydantic import (
+    PaymentCardNumber,
+    PositiveFloat,
+    conint,
+    constr,
+    validator,
+)
 from pydantic.dataclasses import dataclass
 
 from ..auth import ORDEN_FIELDNAMES, compute_signature, join_fields
-from ..types import Prioridad, TipoCuenta, digits, truncated_str
+from ..types import (
+    Clabe,
+    MXPhoneNumber,
+    PaymentCardNumber,
+    Prioridad,
+    TipoCuenta,
+    digits,
+    truncated_str,
+)
 from .base import Resource
 
 STP_BANK_CODE = '90646'
@@ -27,13 +41,12 @@ class Orden(Resource):
     monto: PositiveFloat
     conceptoPago: truncated_str(39)
 
+    cuentaBeneficiario: Union[Clabe, PaymentCardNumber, MXPhoneNumber]
     nombreBeneficiario: truncated_str(39)
-    cuentaBeneficiario: digits(10, 19)
     institucionContraparte: digits(5, 5)
     tipoCuentaBeneficiario: int
 
-    cuentaOrdenante: digits(18, 18)
-
+    cuentaOrdenante: Clabe
     nombreOrdenante: Optional[truncated_str(39)] = None
     institucionOperante: digits(5, 5) = STP_BANK_CODE
     tipoCuentaOrdenante: Optional[int] = None
@@ -75,15 +88,6 @@ class Orden(Resource):
         # Test before Pydantic coerces it to a float
         if not isinstance(self.monto, float):
             raise ValueError('monto must be a float')
-
-    @validator('cuentaBeneficiario', 'cuentaOrdenante', each_item=True)
-    def _validate_cuenta(cls, v):
-        if len(v) == 18:
-            if not clabe.validate_clabe(v):
-                raise ValueError('cuenta no es una válida CLABE')
-        elif not len(v) in {10, 15, 16}:
-            raise ValueError('cuenta no es válida')
-        return v
 
     @validator('institucionContraparte', 'institucionOperante', each_item=True)
     def _validate_institucion(cls, v):

@@ -6,7 +6,7 @@ from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
 
 from ..auth import CUENTA_FIELDNAMES, compute_signature, join_fields
-from ..types import digits, truncated_str
+from ..types import Clabe, digits, truncated_str
 from .base import Resource
 
 
@@ -21,7 +21,7 @@ class Cuenta(Resource):
 
     nombre: truncated_str(50)
     apellidoPaterno: truncated_str(50)
-    cuenta: digits(18, 18)
+    cuenta: Clabe
     rfcCurp: constr(max_length=18)
 
     apellidoMaterno: Optional[truncated_str(50)] = None
