@@ -86,12 +86,17 @@ class Orden(Resource):
     @property
     def tipoCuentaBeneficiario(self) -> int:
         tipo: TipoCuenta
-        if isinstance(self.cuentaBeneficiario, Clabe):
+        cuenta_len = len(self.cuentaBeneficiario)
+        if cuenta_len == 18:
             tipo = TipoCuenta.clabe
-        elif isinstance(self.cuentaBeneficiario, PaymentCardNumber):
+        elif cuenta_len in {15, 16}:
             tipo = TipoCuenta.card
-        else:
+        elif cuenta_len == 10:
             tipo = TipoCuenta.phone_number
+        else:
+            raise ValueError(
+                f'{cuenta_len} no es un length valído para cuentaBeneficiario'
+            )
         return tipo.value
 
     @validator('institucionContraparte')
