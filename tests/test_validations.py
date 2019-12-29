@@ -10,7 +10,6 @@ ORDEN_KWARGS = dict(
     monto=1.2,
     tipoPago=1,
     cuentaOrdenante='646180110400000007',
-    tipoCuentaBeneficiario=40,
     nombreBeneficiario='Ricardo Sanchez',
     cuentaBeneficiario='072691004495711499',
     conceptoPago='Prueba',
@@ -90,21 +89,6 @@ def test_invalid_bank():
     error = errors[0]
     assert error['loc'] == ('institucionContraparte',)
     assert error['type'] == 'value_error'
-
-
-def test_tipo_cuenta():
-    with pytest.raises(ValidationError) as exc_info:
-        create_orden(
-            tipoCuentaBeneficiario=3,
-            tipoCuentaOrdenante=5,
-            cuentaOrdenante='646180157084947785',
-        )
-    errors = exc_info.value.errors()
-    assert len(errors) >= 2
-    assert errors[0]['loc'] == ('tipoCuentaBeneficiario',)
-    assert errors[0]['type'] == 'value_error'
-    assert errors[1]['loc'] == ('tipoCuentaOrdenante',)
-    assert errors[1]['type'] == 'value_error'
 
 
 def test_replace_unicode():

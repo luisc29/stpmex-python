@@ -66,6 +66,7 @@ class Clabe(str):
         yield validate_digits
         yield cls.validate_bank_code
         yield cls.validate_control_digit
+        yield cls
 
     @classmethod
     def validate_digits(cls, clabe: str) -> str:

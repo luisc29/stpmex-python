@@ -53,7 +53,6 @@ orden = client.ordenes.alta(
     institucionContraparte='40072',
     monto=1.2,
     nombreBeneficiario='Ricardo Sanchez',
-    tipoCuentaBeneficiario=40,
     cuentaBeneficiario='072691004495711499',
     conceptoPago='Prueba',
     cuentaOrdenante='646180110400000007',

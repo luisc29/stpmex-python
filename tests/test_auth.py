@@ -8,9 +8,9 @@ from stpmex.auth import (
 
 def test_join_fields_for_orden(orden):
     joined = (
-        b'||40072|TAMIZI|||CR1564969083|90646|1.20|1|||646180110400000007||40'
-        b'|Ricardo Sanchez|072691004495711499|ND||||||Prueba||||||5273144||T|'
-        b'|3|1|||'
+        b'||40072|TAMIZI|||CR1564969083|90646|1.20|1|40||646180110400000007|'
+        b'|40|Ricardo Sanchez|072691004495711499|ND||||||Prueba||||||5273144|'
+        b'|T||3|1|||'
     )
     assert join_fields(orden, ORDEN_FIELDNAMES) == joined
 
@@ -22,9 +22,9 @@ def test_join_fields_for_cuenta(cuenta):
 
 def test_compute_signature(client, orden):
     firma = (
-        'R7aT7P91HAyJi9Q+aKdy2OJXK27qiA23/uKZAQ08pHnZpBpCF+ANbH6MMZUmEj1Swdrd5'
-        '8krbgGpEU3R+pSKLDd7Ngo/0MIWdy7Qrl0dIT0rDKjk1FdkgT9AtoHEeOkPcHso+qyyCv'
-        'vkZgkCqyhZbpza3IOzKFd3QJs4nvqG+5g='
+        'QSESEqJTcn8hhK2QaA/z9VnIZDktwgPS1VWJxOooZt3vNEi2IKrIoPI+/O/SDo/lZAMAm'
+        'xg6De7Sg/OALjibLPpLlONd0VLIa81xsF0FmP+22mT9MtPgf3/kGuZvgSKpzzzNbhxEM+'
+        '/j4sgWw9ucbD0Oh+ajsN1MgKjIBaTC7SI='
     )
     sig = compute_signature(client.pkey, join_fields(orden, ORDEN_FIELDNAMES))
     assert sig == firma

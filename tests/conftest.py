@@ -44,9 +44,7 @@ def orden_dict():
         tipoPago=1,
         nombreOrdenante=None,
         cuentaOrdenante='646180110400000007',
-        tipoCuentaOrdenante=None,
         rfcCurpOrdenante=None,
-        tipoCuentaBeneficiario=40,
         nombreBeneficiario='Ricardo Sanchez',
         cuentaBeneficiario='072691004495711499',
         rfcCurpBeneficiario='ND',
@@ -54,7 +52,6 @@ def orden_dict():
         referenciaNumerica=5273144,
         topologia='T',
         medioEntrega=3,
-        prioridad=1,
         iva=None,
     )
 
