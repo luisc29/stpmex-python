@@ -51,9 +51,9 @@ cuenta = client.cuentas.alta(
 
 orden = client.ordenes.registra(
     monto=1.2,
+    cuentaOrdenante=cuenta.cuenta,
     nombreBeneficiario='Ricardo Sanchez',
     cuentaBeneficiario='072691004495711499',
-    cuentaOrdenante=cuenta.cuenta,
     institucionContraparte='40072',
     conceptoPago='Prueba',
 )
