@@ -74,12 +74,6 @@ class Clabe(str):
         yield cls
 
     @classmethod
-    def validate_digits(cls, clabe: str) -> str:
-        if not clabe.isdigit():
-            raise NotDigitError
-        return clabe
-
-    @classmethod
     def validate_bank_code(cls, clabe: str) -> str:
         if clabe[:3] not in BANKS.keys():
             raise exc.BankCodeValidationError

@@ -6,12 +6,12 @@ from stpmex.exc import (
     BankCodeValidationError,
     ClabeControlDigitValidationError,
 )
-from stpmex.types import Clabe
+from stpmex.types import Clabe, validate_digits
 
 
 def test_clabe_not_digit():
     with pytest.raises(NotDigitError):
-        Clabe.validate_digits('h' * 18)
+        validate_digits('h' * 18)
 
 
 def test_invalid_bank_code():
