@@ -41,7 +41,7 @@ class Orden(Resource):
 
     cuentaOrdenante: Clabe
     nombreOrdenante: Optional[truncated_str(39)] = None
-    institucionOperante: ClassVar[digits(5, 5)] = STP_BANK_CODE
+    institucionOperante: digits(5, 5) = STP_BANK_CODE
 
     tipoCuentaBeneficiario: Optional[TipoCuenta] = None
     tipoCuentaOrdenante: TipoCuenta = TipoCuenta.clabe.value
