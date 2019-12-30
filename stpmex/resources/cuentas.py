@@ -6,7 +6,7 @@ from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
 
 from ..auth import CUENTA_FIELDNAMES, compute_signature, join_fields
-from ..types import Clabe, digits, truncated_str
+from ..types import Clabe, Genero, digits, truncated_str
 from .base import Resource
 
 
@@ -25,7 +25,7 @@ class Cuenta(Resource):
     rfcCurp: constr(max_length=18)
 
     apellidoMaterno: Optional[truncated_str(50)] = None
-    genero: Optional[constr(regex=r'H|M')] = None
+    genero: Optional[Genero] = None
     fechaNacimiento: Optional[dt.date] = None
     # Esperanda para STP que agregan Nacido en Extranjero
     entidadFederativa: Optional[conint(ge=1, le=32)] = None

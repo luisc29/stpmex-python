@@ -38,6 +38,11 @@ class TipoCuenta(int, Enum):
     clabe = 40
 
 
+class Genero(str, Enum):
+    mujer = 'M'
+    hombre = 'H'
+
+
 def validate_digits(v: str) -> str:
     if not v.isdigit():
         raise NotDigitError
