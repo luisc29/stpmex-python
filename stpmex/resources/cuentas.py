@@ -1,6 +1,6 @@
 import datetime as dt
 import unicodedata
-from typing import Any, ClassVar, Dict, Optional
+from typing import Any, ClassVar, Dict, List, Optional
 
 from pydantic import conint, constr, validator
 from pydantic.dataclasses import dataclass
@@ -51,6 +51,17 @@ class Cuenta(Resource):
         resp = cls._client.put(endpoint, cuenta.to_dict())
         cuenta.id = resp['id']
         return cuenta
+
+    @classmethod
+    def alta_lote(cls, lote: List['Cuenta']):
+        endpoint = cls._endpoint + '/fisicas'
+        cuentas = dict(cuentasFisicas=[cuenta.to_dict() for cuenta in lote])
+        return dict(
+            zip(
+                [cuenta.cuenta for cuenta in lote],
+                cls._client.put(endpoint, cuentas),
+            )
+        )
 
     def baja(self) -> Dict[str, Any]:
         """Dar de baja"""

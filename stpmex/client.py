@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Dict
+from typing import Any, ClassVar, Dict, List, Union
 
 from OpenSSL import crypto
 from requests import Response, Session
@@ -46,15 +46,19 @@ class Client:
         Resource.empresa = empresa
         Resource._client = self
 
-    def put(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    def put(
+        self, endpoint: str, data: Dict[str, Any]
+    ) -> Union[Dict[str, Any], List[Any]]:
         return self.request('put', endpoint, data)
 
-    def delete(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    def delete(
+        self, endpoint: str, data: Dict[str, Any]
+    ) -> Union[Dict[str, Any], List[Any]]:
         return self.request('delete', endpoint, data)
 
     def request(
         self, method: str, endpoint: str, data: Dict[str, Any], **kwargs: Any
-    ) -> Dict[str, Any]:
+    ) -> Union[Dict[str, Any], List[Any]]:
         url = self.base_url + endpoint
         response = self.session.request(
             method, url, json=data, headers=self.headers, **kwargs
@@ -69,10 +73,11 @@ class Client:
     def _check_response(response: Response) -> None:
         if response.ok:
             resp = response.json()
-            try:
-                if 'descripcionError' in resp['resultado']:
-                    raise StpmexException(**resp['resultado'])
-            except KeyError:
-                if 'descripcion' in resp and resp['descripcion']:
-                    raise StpmexException(**resp)
+            if isinstance(resp, dict):
+                try:
+                    if 'descripcionError' in resp['resultado']:
+                        raise StpmexException(**resp['resultado'])
+                except KeyError:
+                    if 'descripcion' in resp and resp['descripcion']:
+                        raise StpmexException(**resp)
         response.raise_for_status()
