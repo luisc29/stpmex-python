@@ -27,7 +27,7 @@ class Cuenta(Resource):
     apellidoMaterno: Optional[truncated_str(50)] = None
     genero: Optional[Genero] = None
     fechaNacimiento: Optional[dt.date] = None
-    # Esperanda para STP que agregan Nacido en Extranjero
+    # Esperando a que STP agregue Nacido en el Extranjero
     entidadFederativa: Optional[conint(ge=1, le=32)] = None
     actividadEconomica: Optional[conint(ge=28, le=74)] = None
     calle: Optional[truncated_str(60)] = None
