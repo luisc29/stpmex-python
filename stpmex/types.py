@@ -14,16 +14,16 @@ from pydantic.validators import (
 from . import exc
 
 if TYPE_CHECKING:
-    from pydantic.typing import CallableGenerator
+    from pydantic.typing import CallableGenerator  # pragma: no cover
 
 
-def truncated_str(length) -> Type:
+def truncated_str(length) -> Type[str]:
     return constr(strip_whitespace=True, min_length=1, curtail_length=length)
 
 
 def digits(
     min_length: Optional[int] = None, max_length: Optional[int] = None
-) -> Type:
+) -> Type[str]:
     return constr(regex=r'^\d+$', min_length=min_length, max_length=max_length)
 
 
