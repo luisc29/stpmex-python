@@ -47,8 +47,8 @@ class Cuenta(Resource):
     def alta(cls, **kwargs) -> 'Cuenta':
         """Dar de alta"""
         cuenta = cls(**kwargs)
-        endpoint = cuenta._endpoint + '/fisica'
-        resp = cuenta._client.put(endpoint, cuenta.to_dict())
+        endpoint = cls._endpoint + '/fisica'
+        resp = cls._client.put(endpoint, cuenta.to_dict())
         cuenta.id = resp['id']
         return cuenta
 
