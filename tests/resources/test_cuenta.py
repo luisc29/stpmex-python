@@ -3,6 +3,7 @@ import string
 
 import pytest
 from clabe import generate_new_clabes
+
 from stpmex.resources import Cuenta
 
 
@@ -22,8 +23,12 @@ def test_alta_lote(client, cuenta_dict):
     del cuenta_dict['rfcCurp']
     del cuenta_dict['cuenta']
     num_cuentas = 100
-    rfcs = ''.join([random.choice(
-        string.ascii_uppercase + string.digits) for _ in range(num_cuentas)])
+    rfcs = ''.join(
+        [
+            random.choice(string.ascii_uppercase + string.digits)
+            for _ in range(num_cuentas)
+        ]
+    )
     clabes = generate_new_clabes(num_cuentas, '6461801570')
 
     lote = []
