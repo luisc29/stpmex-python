@@ -27,12 +27,12 @@ def digits(
     return constr(regex=r'^\d+$', min_length=min_length, max_length=max_length)
 
 
-class Prioridad(Enum):
+class Prioridad(int, Enum):
     normal = 0
     alta = 1
 
 
-class TipoCuenta(Enum):
+class TipoCuenta(int, Enum):
     card = 3
     phone_number = 10
     clabe = 40

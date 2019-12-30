@@ -1,4 +1,5 @@
 from base64 import b64encode
+from enum import Enum
 from typing import List
 
 from OpenSSL import crypto
@@ -57,6 +58,8 @@ def join_fields(obj: Resource, fieldnames: List[str]) -> bytes:
         value = getattr(obj, field, None)
         if isinstance(value, float):
             value = f'{value:.2f}'
+        elif isinstance(value, Enum) and value:
+            value = value.value
         joined_fields.append(str(value or ''))
     return ('||' + '|'.join(joined_fields) + '||').encode('utf-8')
 

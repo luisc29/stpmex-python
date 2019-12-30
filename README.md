@@ -50,12 +50,12 @@ cuenta = client.cuentas.alta(
 )
 
 orden = client.ordenes.registra(
-    institucionContraparte='40072',
     monto=1.2,
     nombreBeneficiario='Ricardo Sanchez',
     cuentaBeneficiario='072691004495711499',
-    conceptoPago='Prueba',
     cuentaOrdenante=cuenta.cuenta,
+    institucionContraparte='40072',
+    conceptoPago='Prueba',
 )
 
 cuenta.baja()

@@ -1,6 +1,6 @@
 import pytest
-from pydantic.errors import NotDigitError
 from clabe import compute_control_digit
+from pydantic.errors import NotDigitError
 
 from stpmex.exc import (
     BankCodeValidationError,

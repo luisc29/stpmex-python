@@ -2,7 +2,7 @@ import random
 import time
 import unicodedata
 from dataclasses import field
-from typing import Any, ClassVar, Dict, Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 
 import clabe
 from pydantic import PositiveFloat, conint, constr, validator
@@ -32,10 +32,6 @@ class Orden(Resource):
 
     _endpoint: ClassVar[str] = '/ordenPago'
 
-    prioridad: ClassVar[int] = Prioridad.alta.value
-    tipoCuentaOrdenante: ClassVar[int] = TipoCuenta.clabe.value
-    institucionOperante: ClassVar[digits(5, 5)] = STP_BANK_CODE
-
     monto: PositiveFloat
     conceptoPago: truncated_str(39)
 
@@ -45,6 +41,10 @@ class Orden(Resource):
 
     cuentaOrdenante: Clabe
     nombreOrdenante: Optional[truncated_str(39)] = None
+    institucionOperante: ClassVar[digits(5, 5)] = STP_BANK_CODE
+
+    tipoCuentaBeneficiario: Optional[TipoCuenta] = None
+    tipoCuentaOrdenante: TipoCuenta = TipoCuenta.clabe.value
 
     claveRastreo: truncated_str(29) = field(
         default_factory=lambda: f'CR{int(time.time())}'
@@ -54,6 +54,8 @@ class Orden(Resource):
     )
     rfcCurpBeneficiario: constr(max_length=18) = 'ND'
     rfcCurpOrdenante: Optional[constr(max_length=18)] = None
+
+    prioridad: int = Prioridad.alta.value
     medioEntrega: int = 3
     tipoPago: int = 1
     topologia: str = 'T'
@@ -65,6 +67,8 @@ class Orden(Resource):
         # Test before Pydantic coerces it to a float
         if not isinstance(self.monto, float):
             raise ValueError('monto must be a float')
+        cb = self.cuentaBeneficiario
+        self.tipoCuentaBeneficiario = self.get_tipo_cuenta(cb)
 
     @classmethod
     def registra(cls, **kwargs) -> 'Orden':
@@ -83,10 +87,9 @@ class Orden(Resource):
         joined_fields = join_fields(self, ORDEN_FIELDNAMES)
         return compute_signature(self._client.pkey, joined_fields)
 
-    @property
-    def tipoCuentaBeneficiario(self) -> int:
-        tipo: TipoCuenta
-        cuenta_len = len(self.cuentaBeneficiario)
+    @staticmethod
+    def get_tipo_cuenta(cuenta: str) -> Optional[TipoCuenta]:
+        cuenta_len = len(cuenta)
         if cuenta_len == 18:
             tipo = TipoCuenta.clabe
         elif cuenta_len in {15, 16}:
@@ -94,13 +97,11 @@ class Orden(Resource):
         elif cuenta_len == 10:
             tipo = TipoCuenta.phone_number
         else:
-            raise ValueError(
-                f'{cuenta_len} no es un length valído para cuentaBeneficiario'
-            )
-        return tipo.value
+            tipo = None
+        return tipo
 
     @validator('institucionContraparte')
-    def _validate_institucion(cls, v):
+    def _validate_institucion(cls, v: str) -> str:
         if v not in clabe.BANKS.values():
             raise ValueError(f'{v} no se corresponde a un banco')
         return v
@@ -111,8 +112,3 @@ class Orden(Resource):
     def _unicode_to_ascii(cls, v):
         v = unicodedata.normalize('NFKD', v).encode('ascii', 'ignore')
         return v.decode('ascii')
-
-    def to_dict(self) -> Dict[str, Any]:
-        orden_dict = super().to_dict()
-        orden_dict['tipoCuentaBeneficiario'] = self.tipoCuentaBeneficiario
-        return orden_dict

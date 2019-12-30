@@ -21,14 +21,13 @@ def test_registra_orden(client: Client, orden_dict: Dict[str, Any]):
         ('072691004495711499', TipoCuenta.clabe),
         ('4000000000000002', TipoCuenta.card),
         ('5512345678', TipoCuenta.phone_number),
+        ('123', None),
     ],
 )
-def test_tipoCuentaBeneficiario(orden: Orden, cuenta: str, tipo: TipoCuenta):
-    orden.cuentaBeneficiario = cuenta
-    assert orden.tipoCuentaBeneficiario == tipo.value
+def test_tipoCuentaBeneficiario(cuenta: str, tipo: TipoCuenta):
+    assert Orden.get_tipo_cuenta(cuenta) == tipo
 
 
-def test_invalid_cuentaBeneficiario(orden: Orden):
-    orden.cuentaBeneficiario = '123'
-    with pytest.raises(ValueError):
-        orden.tipoCuentaBeneficiario
+# def test_invalid_cuentaBeneficiario(orden: Orden):
+#     with pytest.raises(ValueError):
+#         Orden.get_tipo_cuenta('123')
