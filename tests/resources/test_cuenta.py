@@ -1,6 +1,3 @@
-import random
-import string
-
 import pytest
 from clabe import generate_new_clabes
 
