@@ -1,11 +1,11 @@
 interactions:
 - request:
-    body: '{"nombre": "Eduardo", "apellidoPaterno": "Salvador", "cuenta": "646180157099999993",
-      "rfcCurp": "rfcrfc5", "apellidoMaterno": "Hernandez", "genero": "H", "fechaNacimiento":
-      "19900414", "entidadFederativa": 1, "actividadEconomica": 30, "calle": "mi calle",
-      "numeroExterior": "2", "numeroInterior": "1", "colonia": "mi colonia", "alcaldiaMunicipio":
-      "mi alcaldia", "cp": "12345", "pais": 1, "email": "asdasd@domain.com", "idIdentificacion":
-      "123123123", "firma": "rLBNjAP8W1KeHd26d9GYzN6NuvhY7Z2LoIgvuxflPJNKsQq50Rp/vP+C6qH+wYmkL0xTA0AHuOHU3yN2BrncHIxbR53U8lmS2VUHA35IEGNSCdcs2vrjKpJq7L2RstsEk5+bLCEydpOmo50ujwrPraRICbluMzM0I6A+vCXrj5s=",
+    body: '{"nombre": "Eduardo", "apellidoPaterno": "Salvador", "cuenta": "646180157017318462",
+      "rfcCurp": "SAHE800416HDFABC01", "apellidoMaterno": "Hernandez", "genero": "H",
+      "fechaNacimiento": "19800414", "entidadFederativa": 1, "actividadEconomica":
+      30, "calle": "mi calle", "numeroExterior": "2", "numeroInterior": "1", "colonia":
+      "mi colonia", "alcaldiaMunicipio": "mi alcaldia", "cp": "12345", "pais": 1,
+      "email": "asdasd@domain.com", "idIdentificacion": "123123123", "firma": "f4lP1teXKOijJL+P3kag6Goo0jbmW47JTuJ3tjFxqCJN12IHFBx5yP+DIxouAWSGgwC8uF6Ujx2GDLAntosEsvMk5v+9dl1OQ+2kjKDBEsRNZsgGzpnKyVa8qBvh4/Vs+T8kpoClY7OlRMwO0tZUe9fnS67hlXDQrw7gHuVjiCk=",
       "empresa": "TAMIZI"}'
     headers:
       Accept:
@@ -15,11 +15,11 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - '657'
+      - '668'
       Content-Type:
       - application/json
       User-Agent:
-      - stpmex-python/3.0.0.dev3
+      - stpmex-python/3.0.0.rc1
     method: PUT
     uri: https://demo.stpmex.com:7024/speidemows/rest/cuentaModule/fisica
   response:
@@ -31,7 +31,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 27 Dec 2019 23:08:15 GMT
+      - Tue, 31 Dec 2019 00:36:16 GMT
     status:
       code: 200
       message: OK

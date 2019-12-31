@@ -16,7 +16,8 @@ def test_join_fields_for_orden(orden):
 
 
 def test_join_fields_for_cuenta(cuenta):
-    joined = b'||TAMIZI|646180157099999993|rfcrfc5||'
+    cuenta.cuenta = '646180157099999993'
+    joined = b'||TAMIZI|646180157099999993|SAHE800416HDFABC01||'
     assert join_fields(cuenta, CUENTA_FIELDNAMES) == joined
 
 

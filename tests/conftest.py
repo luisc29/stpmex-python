@@ -2,6 +2,7 @@ import datetime as dt
 
 import pytest
 
+from clabe import generate_new_clabes
 from stpmex import Client
 from stpmex.resources import Cuenta, Orden
 
@@ -64,12 +65,12 @@ def orden(client, orden_dict):
 @pytest.fixture
 def cuenta_dict():
     yield dict(
-        cuenta='646180157099999993',
+        cuenta=generate_new_clabes(1, '6461801570')[0],
         nombre='Eduardo',
         apellidoPaterno='Salvador',
         apellidoMaterno='Hernandez',
-        rfcCurp='rfcrfc5',
-        fechaNacimiento=dt.date(1990, 4, 14),
+        rfcCurp='SAHE800416HDFABC01',
+        fechaNacimiento=dt.date(1980, 4, 14),
         genero='H',
         entidadFederativa='1',
         actividadEconomica='30',

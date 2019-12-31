@@ -9,6 +9,8 @@ from ..auth import CUENTA_FIELDNAMES, compute_signature, join_fields
 from ..types import Clabe, Genero, digits, truncated_str
 from .base import Resource
 
+MAX_LOTE = 100
+
 
 @dataclass
 class Cuenta(Resource):
@@ -54,6 +56,11 @@ class Cuenta(Resource):
 
     @classmethod
     def alta_lote(cls, lote: List['Cuenta']):
+        if len(lote) > MAX_LOTE:
+            return {
+                **cls.alta_lote(lote[:MAX_LOTE]),
+                **cls.alta_lote(lote[MAX_LOTE:]),
+            }
         endpoint = cls._endpoint + '/fisicas'
         cuentas = dict(cuentasFisicas=[cuenta.to_dict() for cuenta in lote])
         return dict(

@@ -19,21 +19,14 @@ def test_baja_cuenta(client, cuenta):
 
 
 @pytest.mark.vcr
-def test_alta_lote(client, cuenta_dict):
-    del cuenta_dict['rfcCurp']
+@pytest.mark.parametrize('num_cuentas', [95, 450])
+def test_alta_lote(client, cuenta_dict, num_cuentas):
     del cuenta_dict['cuenta']
-    num_cuentas = 100
-    rfcs = ''.join(
-        [
-            random.choice(string.ascii_uppercase + string.digits)
-            for _ in range(num_cuentas)
-        ]
-    )
     clabes = generate_new_clabes(num_cuentas, '6461801570')
 
     lote = []
-    for rfc, clabe in zip(rfcs, clabes):
-        cuenta = Cuenta(**cuenta_dict, cuenta=clabe, rfcCurp=rfc)
+    for clabe in clabes:
+        cuenta = Cuenta(**cuenta_dict, cuenta=clabe)
         lote.append(cuenta)
     resp = client.cuentas.alta_lote(lote)
     assert list(resp.keys()) == clabes
