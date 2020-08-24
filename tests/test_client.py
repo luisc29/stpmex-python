@@ -4,6 +4,7 @@ from requests import HTTPError
 from stpmex.client import Client
 from stpmex.exc import (
     AccountDoesNotExist,
+    AccountInReview,
     BankCodeClabeMismatch,
     ClaveRastreoAlreadyInUse,
     DuplicatedAccount,
@@ -138,6 +139,11 @@ def test_incorrect_passphrase():
             StpmexException,
         ),
         (
+            dict(descripcion='Cuenta en revisión.', id=0),
+            CUENTA_ENDPOINT,
+            AccountInReview,
+        ),
+        (
             dict(descripcion='Cuenta Duplicada', id=1),
             CUENTA_ENDPOINT,
             DuplicatedAccount,
@@ -163,9 +169,9 @@ def test_incorrect_passphrase():
 def test_errors(
     client_mock: Client, endpoint: str, expected_exc: type
 ) -> None:
-    with pytest.raises(StpmexException) as exc_info:
+    with pytest.raises(expected_exc) as exc_info:
         client_mock.put(endpoint, dict(firma='{hola}'))
     exc = exc_info.value
-    assert type(exc) is expected_exc
+    # assert type(exc) is expected_exc
     assert repr(exc)
     assert str(exc)

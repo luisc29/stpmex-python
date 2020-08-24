@@ -82,3 +82,7 @@ class InvalidInstitution(StpmexException):
 
 class AccountDoesNotExist(StpmexException):
     """La cuenta no existe"""
+
+
+class AccountInReview(StpmexException):
+    """Cuenta en revisión"""

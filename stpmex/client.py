@@ -8,6 +8,7 @@ from requests import Response, Session
 
 from .exc import (
     AccountDoesNotExist,
+    AccountInReview,
     BankCodeClabeMismatch,
     ClaveRastreoAlreadyInUse,
     DuplicatedAccount,
@@ -108,11 +109,16 @@ class Client:
         resp = response.json()
         if isinstance(resp, dict):
             try:
-                if 'descripcionError' in resp['resultado']:
-                    _raise_description_error_exc(resp)
+                _raise_description_error_exc(resp)
             except KeyError:
-                if 'descripcion' in resp and resp['descripcion']:
-                    _raise_description_exc(resp)
+                ...
+
+            try:
+                assert resp['descripcion']
+                _raise_description_exc(resp)
+            except (AssertionError, KeyError):
+                ...
+
         response.raise_for_status()
 
 
@@ -154,7 +160,9 @@ def _raise_description_exc(resp: Dict) -> NoReturn:
     id = resp['id']
     desc = resp['descripcion']
 
-    if id == 1 and desc == 'Cuenta Duplicada':
+    if id == 0 and 'Cuenta en revisión' in desc:
+        raise AccountInReview(**resp)
+    elif id == 1 and desc == 'Cuenta Duplicada':
         raise DuplicatedAccount(**resp)
     elif id == 1 and desc == 'rfc/curp invalido':
         raise InvalidRfcOrCurp(**resp)
