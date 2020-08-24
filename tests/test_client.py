@@ -172,6 +172,5 @@ def test_errors(
     with pytest.raises(expected_exc) as exc_info:
         client_mock.put(endpoint, dict(firma='{hola}'))
     exc = exc_info.value
-    # assert type(exc) is expected_exc
     assert repr(exc)
     assert str(exc)
